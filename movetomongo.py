@@ -46,9 +46,12 @@ client = MongoClient()
 db = client.github_events
 events = db.events
 
-prefix = '2016-01-01-'
+prefix = '2017-01-01-'
 
 for hour in range(0, 24):
+	if os.path.exists("{}{}.json.gz".format(prefix, hour)):
+		print("Skipping {}{}.json.gz".format(prefix, hour))
+		continue
 	print("Downloading file: {}".format(prefix + str(hour) + '.json.gz'))
 	downloadFile(prefix + str(hour) + '.json.gz')
 	print("Saving file: {}".format(prefix + str(hour) + '.json'))
